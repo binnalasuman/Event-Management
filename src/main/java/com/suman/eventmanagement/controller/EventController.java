@@ -20,7 +20,7 @@ public class EventController {
 
     private final EventService eventService;
 
-    // GET with pagination, optional filters, and sorting
+
     @GetMapping
     public Page<Event> getEvents(
             @RequestParam(defaultValue = "0") int page,
@@ -43,12 +43,11 @@ public class EventController {
         boolean hasStart = startDate != null && !startDate.isBlank();
         boolean hasEnd = endDate != null && !endDate.isBlank();
 
-        // No filters, return all
         if (!hasTitle && !hasLocation && !hasStart && !hasEnd) {
             return eventService.getAllEvents(pageRequest);
         }
 
-        // Parse ISO date-times like "2025-11-20T09:00:00"
+
         LocalDateTime start = hasStart ? LocalDateTime.parse(startDate) : null;
         LocalDateTime end = hasEnd ? LocalDateTime.parse(endDate) : null;
 
@@ -69,7 +68,7 @@ public class EventController {
 
     @PostMapping
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        // Ensure id is not set for creation
+
         if (event.getId() != null) {
             event.setId(null);
         }
